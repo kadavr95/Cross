@@ -130,7 +130,7 @@ object AboutForm: TAboutForm
     Top = 59
     Width = 115
     Height = 29
-    Caption = 'Version: 0.4'
+    Caption = 'Version: 0.5'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -21
@@ -145,7 +145,7 @@ object AboutForm: TAboutForm
     Width = 116
     Height = 20
     Cursor = crHandPoint
-    Caption = #169' Dimini Inc., 2022'
+    Caption = #169' Dimini Inc., 2024'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
