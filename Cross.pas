@@ -21,8 +21,10 @@ type
     ShowGridSize: TMenuItem;
     Help1: TMenuItem;
     FreezePosition: TMenuItem;
+    ShowSecondaryGrid: TMenuItem;
     procedure DrawRectangle;
     procedure DrawCircle;
+    procedure DrawSecondaryGrid(x: real; y: real);
     procedure DrawGrid;
     procedure ResizeGrid(mode: integer; Shift: TShiftState);
     procedure FormPaint(Sender: TObject);
@@ -41,8 +43,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ShowGridSizeClick(Sender: TObject);
     procedure Help1Click(Sender: TObject);
+    procedure ShowSecondaryGridClick(Sender: TObject);
   private
-    size, sizeAdditional, lineWidth: integer;
+    size, sizeAdditional, sizeSecondary, lineWidth: integer;
     appMode, editMode, resizingMode: string;
   public
     { Public declarations }
@@ -76,6 +79,13 @@ begin
   Circle1.Checked := True;
   Rectangle1.Checked := False;
   appMode := 'Circle';
+  DrawGrid();
+end;
+
+
+procedure TApp.ShowSecondaryGridClick(Sender: TObject);
+begin
+  ShowSecondaryGrid.Checked := not ShowSecondaryGrid.Checked;
   DrawGrid();
 end;
 
@@ -128,6 +138,9 @@ begin
   App.Canvas.Brush.Color := clFuchsia;
   App.Canvas.Rectangle(0, 0, App.ClientWidth, App.ClientHeight);
 
+  if ShowSecondaryGrid.Checked then
+    DrawSecondaryGrid(centerX, centerY);
+
   App.Canvas.Pen.Color := clRed;
   App.Canvas.Pen.Width := lineWidth;
 
@@ -156,8 +169,13 @@ begin
   App.Canvas.Brush.Color := clFuchsia;
   App.Canvas.Rectangle(0, 0, App.ClientWidth, App.ClientHeight);
 
+  if ShowSecondaryGrid.Checked then
+    DrawSecondaryGrid(centerX, centerY);
+
   App.Canvas.Pen.Color := clRed;
   App.Canvas.Pen.Width := lineWidth;
+
+  App.Canvas.Brush.Style:=bsClear;
 
   App.Canvas.Ellipse(round(centerX - size / 2), round(centerY - size / 2),
     round(centerX + size / 2), round(centerY + size / 2));
@@ -175,6 +193,57 @@ begin
   App.Canvas.Pen.Width := 1;
 end;
 
+procedure TApp.DrawSecondaryGrid(x: real; y: real);
+  var i: real;
+begin
+  App.Canvas.Pen.Color := clGray;
+  App.Canvas.Pen.Width := 1;
+
+  i := x;
+  while i > 0 do
+  begin
+    App.Canvas.MoveTo(round(i), 0);
+    App.Canvas.LineTo(round(i), App.Height);
+    App.Canvas.MoveTo(round(i), 0);
+    App.Canvas.LineTo(round(i), App.Height);
+
+    i:= i - sizeSecondary;
+  end;
+
+  i := x + sizeSecondary;
+  while i < App.Width do
+  begin
+    App.Canvas.MoveTo(round(i), 0);
+    App.Canvas.LineTo(round(i), App.Height);
+    App.Canvas.MoveTo(round(i), 0);
+    App.Canvas.LineTo(round(i), App.Height);
+
+    i:= i + sizeSecondary;
+  end;
+
+  i := y;
+  while i > 0 do
+  begin
+    App.Canvas.MoveTo(0, round(i));
+    App.Canvas.LineTo(App.Width, round(i));
+    App.Canvas.MoveTo(0, round(i));
+    App.Canvas.LineTo(App.Width, round(i));
+
+    i:= i - sizeSecondary;
+  end;
+
+  i := y + sizeSecondary;
+  while i < App.Height do
+  begin
+    App.Canvas.MoveTo(0, round(i));
+    App.Canvas.LineTo(App.Width, round(i));
+    App.Canvas.MoveTo(0, round(i));
+    App.Canvas.LineTo(App.Width, round(i));
+
+    i:= i + sizeSecondary;
+  end;
+end;
+
 procedure TApp.ResizeGrid(mode: integer; Shift: TShiftState);
 var
   tempSize: integer;
@@ -183,8 +252,10 @@ begin
 
   if editMode = 'Main' then
     tempSize := size
+  else if editMode = 'Additional' then
+    tempSize := sizeAdditional
   else
-    tempSize := sizeAdditional;
+    tempSize := sizeSecondary;
 
   if ssShift in Shift then
     tempSize := tempSize + 100 * mode
@@ -195,8 +266,10 @@ begin
 
   if editMode = 'Main' then
     size := tempSize
+  else if editMode = 'Additional' then
+    sizeAdditional := tempSize
   else
-    sizeAdditional := tempSize;
+    sizeSecondary := tempSize;
 
   if size < 0 then
     size := 0;
@@ -204,6 +277,9 @@ begin
     sizeAdditional := 0;
   if sizeAdditional > size then
     sizeAdditional := size;
+  if sizeSecondary < 1 then
+    sizeSecondary := 1;
+
 
   DrawGrid();
 end;
@@ -222,6 +298,8 @@ begin
     App.Canvas.TextOut(10,10, '⌀'+size.ToString);
     if appMode = 'Circle' then
       App.Canvas.TextOut(10,30, '⌀'+sizeAdditional.ToString);
+    if ShowSecondaryGrid.Checked then
+      App.Canvas.TextOut(10,50, '⌀'+sizeSecondary.ToString);
   end;
 end;
 
@@ -231,6 +309,7 @@ begin
   editMode := 'Main';
   size := 100;
   sizeAdditional := 50;
+  sizeSecondary := 50;
   lineWidth := 1;
 end;
 
@@ -286,6 +365,10 @@ begin
   if Key = 50 then
   begin
     editMode := 'Additional';
+  end;
+  if Key = 48 then
+  begin
+    editMode := 'Secondary';
   end;
 
   DrawGrid();

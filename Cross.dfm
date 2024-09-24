@@ -36,6 +36,10 @@ object App: TApp
         RadioItem = True
         OnClick = Circle1Click
       end
+      object ShowSecondaryGrid: TMenuItem
+        Caption = 'Show Secondary Grid'
+        OnClick = ShowSecondaryGridClick
+      end
       object ShowGridSize: TMenuItem
         Caption = 'Show Grid Size'
         OnClick = ShowGridSizeClick
