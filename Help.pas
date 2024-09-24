@@ -34,12 +34,12 @@ begin
   UserManual.SelAttributes.Size := 26;
   UserManual.SelAttributes.Style := [fsBold];
   UserManual.SelText := 'Controls'+#10;
-  UserManual.SelText := '- change grid type ';
+  UserManual.SelText := '- change main grid type ';
   UserManual.SelAttributes.Style := [fsItalic];
   UserManual.SelText := '(lines/circles) ';
   UserManual.SelAttributes.Style := [];
   UserManual.SelText := 'via app menu'+#10#13;
-  UserManual.SelText := '- select grid element to resize via buttons ';
+  UserManual.SelText := '- select main grid element to resize via buttons ';
   UserManual.SelAttributes.Style := [fsBold];
   UserManual.SelText := '1 ';
   UserManual.SelAttributes.Style := [];
@@ -47,7 +47,11 @@ begin
   UserManual.SelAttributes.Style := [fsBold];
   UserManual.SelText := '2 ';
   UserManual.SelAttributes.Style := [fsItalic];
-  UserManual.SelText := '(circles mode only)'+#10#13;
+  UserManual.SelText := '(circles mode only)';
+  UserManual.SelAttributes.Style := [];
+  UserManual.SelText := ' or secondary grid through button ';
+  UserManual.SelAttributes.Style := [fsBold];
+  UserManual.SelText := '0'+#10#13;
   UserManual.SelText := '- change grid element size via mouse scroll or via' +
     ' buttons ';
   UserManual.SelAttributes.Style := [fsBold];
@@ -66,7 +70,7 @@ begin
   UserManual.SelText := 'Shift ';
   UserManual.SelAttributes.Style := [fsItalic];
   UserManual.SelText := 'for x100 speed)'+#10#13;
-  UserManual.SelText := '- change grid lines width via buttons ';
+  UserManual.SelText := '- change main grid lines width via buttons ';
   UserManual.SelAttributes.Style := [fsBold];
   UserManual.SelText := '< ';
   UserManual.SelAttributes.Style := [];
