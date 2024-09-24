@@ -48,7 +48,8 @@ begin
   UserManual.SelText := '2 ';
   UserManual.SelAttributes.Style := [fsItalic];
   UserManual.SelText := '(circles mode only)'+#10#13;
-  UserManual.SelText := '- change grid element size via mouse scroll or via buttons ';
+  UserManual.SelText := '- change grid element size via mouse scroll or via' +
+    ' buttons ';
   UserManual.SelAttributes.Style := [fsBold];
   UserManual.SelText := '- ';
   UserManual.SelAttributes.Style := [];
@@ -83,7 +84,10 @@ begin
   UserManual.SelText := 'Shift ';
   UserManual.SelAttributes.Style := [fsItalic];
   UserManual.SelText := 'for x100 speed)'+#10#13;
-  UserManual.SelText := '- lock app to be only of square size via app menu';
+  UserManual.SelText := '- lock app to be only of square size via app menu' +
+    #10#13;
+  UserManual.SelText := '- lock app to prevent its movement around the screen' +
+    ' via app menu';
   InitialUserManualWindowProc := UserManual.WindowProc;
   UserManual.WindowProc := UserManualWindowProc;
 end;

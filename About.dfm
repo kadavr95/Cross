@@ -112,6 +112,7 @@ object AboutForm: TAboutForm
     Top = 16
     Width = 89
     Height = 46
+    Cursor = crHandPoint
     Caption = 'Cross'
     DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
@@ -143,6 +144,7 @@ object AboutForm: TAboutForm
     Top = 163
     Width = 116
     Height = 20
+    Cursor = crHandPoint
     Caption = #169' Dimini Inc., 2022'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
